@@ -1,0 +1,2 @@
+PATH=tmp/solr-development/bin:$PATH
+export PATH
