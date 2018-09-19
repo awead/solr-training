@@ -1,0 +1,36 @@
+### Preparation for PostgreSQL for DIH excercises
+
+$ createuser -P -s -e sematext 
+
+$ psql -d template1 -U postgres
+
+CREATE DATABASE sematext_solr_training;
+
+GRANT ALL PRIVILEGES ON DATABASE sematext_solr_training TO sematext;
+
+$ psql -d sematext_solr_training -U sematext -W
+
+CREATE TABLE videos (
+  id INT,
+  url VARCHAR(255),
+  title VARCHAR(255),
+  uploaded_by VARCHAR(255),
+  uploaded_date DATE, 
+  lat DECIMAL, 
+  lon DECIMAL,
+  last_modified TIMESTAMP
+);
+
+CREATE TABLE videos_social (
+  id INT,
+  video_id INT, 
+  likes INT,
+  views INT,
+  last_modified TIMESTAMP
+);
+
+INSERT INTO videos (id, url, title, uploaded_by, uploaded_date, lat, lon, last_modified) VALUES ('19', 'https://www.youtube.com/watch?v=cI-3mEUW_F4', 'Running High Performance And Fault Tolerant Elasticsearch Clusters On Docker', 'PROIDEAconferences', '2016-01-20', '52.14', '21.0', now());
+INSERT INTO videos (id, url, title, uploaded_by, uploaded_date, lat, lon, last_modified) VALUES ('20', 'https://www.youtube.com/watch?v=DS3bBusGsoY', 'ElasticSearch + Docker - configuration, fault tolerance, best practices', 'Mesos User Group Warsaw', '2016-06-24', '52.14', '21.0', now());
+
+INSERT INTO videos_social (id, video_id, likes, views, last_modified) VALUES ('1', '19', '9', '1012', now());
+INSERT INTO videos_social (id, video_id, likes, views, last_modified) VALUES ('2', '20', '1', '60', now());

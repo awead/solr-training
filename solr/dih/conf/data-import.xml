@@ -1,0 +1,32 @@
+<dataConfig>
+  <dataSource driver="org.postgresql.Driver" url="jdbc:postgresql://localhost/sematext_solr_training" user="sematext" password="sematext"/>
+
+  <script>
+	<![CDATA[
+      function makeGeoLocationField(row) {
+	        var lat = row.get('lat');
+	        var lon = row.get('lon');
+		      row.put('geo_location', lat + ',' + lon);
+          return row;
+      }
+    ]]>
+  </script>
+
+  <document>
+	<entity name="video" pk="id" query="SELECT * FROM videos" deltaQuery="SELECT id FROM videos WHERE last_modified > '${dataimporter.last_index_time}'" transformer="script:makeGeoLocationField">
+	  <field column="id" name="id" />
+	  <field column="url" name="url" />
+	  <field column="title" name="title" />
+	  <field column="uploaded_by" name="uploaded_by" />
+	  <field column="uploaded_date" name="upload_date" />
+
+	  <entity name="social" pk="id" query="SELECT * FROM videos_social WHERE video_id='${video.id}'"
+	                deltaQuery="SELECT video_id FROM videos_social WHERE last_modified > '${dataimporter.last_index_time}'"
+	                parentDeltaQuery="SELECT id FROM video WHERE id=${social.video_id}">
+        <field name="likes" column="likes" />
+		    <field name="views" column="likes" />
+	  </entity>
+
+	</entity>
+  </document>
+</dataConfig>

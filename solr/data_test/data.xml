@@ -1,0 +1,11 @@
+<add>
+ <doc>
+  <field name="id">1</field>
+  <field name="title">Battle of the Giants: Solr vs Elasticsearch</field>
+ </doc>
+ <doc>
+ <field name="id">2</field>
+ <field name="title">Battle of the Giants: Solr vs Elasticsearch vol 2</field>
+ </doc>
+</add>
+
